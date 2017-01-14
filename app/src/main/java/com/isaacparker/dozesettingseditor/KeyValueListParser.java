@@ -23,7 +23,7 @@ import android.util.ArrayMap;
  * can be used.
  * @hide
  */
-public class KeyValueListParser {
+class KeyValueListParser {
     private final ArrayMap<String, String> mValues = new ArrayMap<>();
     private final TextUtils.StringSplitter mSplitter;
 
@@ -32,7 +32,7 @@ public class KeyValueListParser {
      * by calling {@link #setString(String)}.
      * @param delim The delimiter that separates key=value pairs.
      */
-    public KeyValueListParser(char delim) {
+    KeyValueListParser(char delim) {
         mSplitter = new TextUtils.SimpleStringSplitter(delim);
     }
 
@@ -68,7 +68,7 @@ public class KeyValueListParser {
      * @param def The value to return if the key was not found, or the value was not a long.
      * @return the long value associated with the key.
      */
-    public long getLong(String key, long def) {
+    long getLong(String key, long def) {
         String value = mValues.get(key);
         if (value != null) {
             try {
@@ -86,7 +86,7 @@ public class KeyValueListParser {
      * @param def The value to return if the key was not found, or the value was not a float.
      * @return the float value associated with the key.
      */
-    public float getFloat(String key, float def) {
+    float getFloat(String key, float def) {
         String value = mValues.get(key);
         if (value != null) {
             try {
@@ -94,20 +94,6 @@ public class KeyValueListParser {
             } catch (NumberFormatException e) {
                 // fallthrough
             }
-        }
-        return def;
-    }
-
-    /**
-     * Get the value for key as a string.
-     * @param key The key to lookup.
-     * @param def The value to return if the key was not found.
-     * @return the string value associated with the key.
-     */
-    public String getString(String key, String def) {
-        String value = mValues.get(key);
-        if (value != null) {
-            return value;
         }
         return def;
     }

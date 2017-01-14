@@ -15,6 +15,22 @@
     <string name="pref_title_display_value_in">Display value in</string>
     <string name="action_profile">Profiles</string>
     <string name="action_save_as_profile">Save as profile</string>
+    <string name="InactiveTimeout">Inactive Timeout:</string>
+    <string name="sensing_timeout">Sensing Timeout:</string>
+    <string name="locating_timeout">Locating Timeout:</string>
+    <string name="location_accuracy">Location Accuracy:</string>
+    <string name="motion_inactive_timeout">Motion Inactive Timeout:</string>
+    <string name="idle_after_inactive_timeout">Idle After Inactive Timeout:</string>
+    <string name="idle_pending_timeout">Idle Pending Timeout:</string>
+    <string name="max_idle_pending_timeout">Max Idle Pending Timeout:</string>
+    <string name="idle_pending_factor">Idle Pending Factor:</string>
+    <string name="idle_timeout">Idle Timeout:</string>
+    <string name="idle_factor">Idle Factor:</string>
+    <string name="min_time_to_alarm">Min Time to Alarm:</string>
+    <string name="max_temp_app_whitelist_duration">Max Temp App Whitelist Duration:</string>
+    <string name="mms_temp_app_whitelist_duration">MMS Temp App Whitelist Duration:</string>
+    <string name="sms_temp_app_whitelist_duration">SMS Temp App Whitelist Duration:</string>
+    <string name="max_idle_timeout">Max Idle Timeout:</string>
     <string-array name="pref_list_display_value_in">
         <item>Milliseconds</item>
         <item>Seconds</item>

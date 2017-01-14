@@ -1,6 +1,8 @@
 package com.isaacparker.dozesettingseditor;
 
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,8 +10,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.ClipboardManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +27,8 @@ import com.stericson.RootShell.execution.Command;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
+
+/*import android.text.ClipboardManager;*/
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,24 +52,6 @@ public class MainActivity extends AppCompatActivity {
             "mms_temp_app_whitelist_duration";
     private static final String KEY_SMS_TEMP_APP_WHITELIST_DURATION =
             "sms_temp_app_whitelist_duration";
-
-    final long INACTIVE_TIMEOUT = 30 * 60 * 1000L;
-    final long SENSING_TIMEOUT = 4 * 60 * 1000L;
-    final long LOCATING_TIMEOUT = 30 * 1000L;
-    final float LOCATION_ACCURACY = 20;
-    final long MOTION_INACTIVE_TIMEOUT = 10 * 60 * 1000L;
-    final long IDLE_AFTER_INACTIVE_TIMEOUT = 30 * 60 * 1000L;
-    final long IDLE_PENDING_TIMEOUT = 5 * 60 * 1000L;
-    final long MAX_IDLE_PENDING_TIMEOUT = 10 * 60 * 1000L;
-    final float IDLE_PENDING_FACTOR = 2;
-    final long IDLE_TIMEOUT = 60 * 60 * 1000L;
-    final long MAX_IDLE_TIMEOUT = 6 * 60 * 60 * 1000L;
-    final long IDLE_FACTOR = 2;
-    final long MIN_TIME_TO_ALARM = 60 * 60 * 1000L;
-    final long MAX_TEMP_APP_WHITELIST_DURATION = 5 * 60 * 1000L;
-    final long MMS_TEMP_APP_WHITELIST_DURATION = 60 * 1000L;
-    final long SMS_TEMP_APP_WHITELIST_DURATION = 20 * 1000L;
-
     private static final String DESC_INACTIVE_TIMEOUT = "This is the time, after becoming inactive, at which we start looking at the motion sensor to determine if the device is being left alone. We don't do this immediately after going inactive just because we don't want to be continually running the significant motion sensor whenever the screen is off.";
     private static final String DESC_SENSING_TIMEOUT = "If we don't receive a callback from AnyMotion in this amount of time + locating_to, we will change from STATE_SENSING to STATE_INACTIVE, and any AnyMotion callbacks while not in STATE_SENSING will be ignored.";
     private static final String DESC_LOCATING_TIMEOUT = "This is how long we will wait to try to get a good location fix before going in to idle mode.";
@@ -84,7 +68,22 @@ public class MainActivity extends AppCompatActivity {
     private static final String DESC_MAX_TEMP_APP_WHITELIST_DURATION = "Max amount of time to temporarily whitelist an app when it receives a high tickle.";
     private static final String DESC_MMS_TEMP_APP_WHITELIST_DURATION = "Amount of time we would like to whitelist an app that is receiving an MMS.";
     private static final String DESC_SMS_TEMP_APP_WHITELIST_DURATION = "Amount of time we would like to whitelist an app that is receiving an SMS.";
-
+    final long INACTIVE_TIMEOUT = 30 * 60 * 1000L;
+    final long SENSING_TIMEOUT = 4 * 60 * 1000L;
+    final long LOCATING_TIMEOUT = 30 * 1000L;
+    final float LOCATION_ACCURACY = 20;
+    final long MOTION_INACTIVE_TIMEOUT = 10 * 60 * 1000L;
+    final long IDLE_AFTER_INACTIVE_TIMEOUT = 30 * 60 * 1000L;
+    final long IDLE_PENDING_TIMEOUT = 5 * 60 * 1000L;
+    final long MAX_IDLE_PENDING_TIMEOUT = 10 * 60 * 1000L;
+    final float IDLE_PENDING_FACTOR = 2;
+    final long IDLE_TIMEOUT = 60 * 60 * 1000L;
+    final long MAX_IDLE_TIMEOUT = 6 * 60 * 60 * 1000L;
+    final long IDLE_FACTOR = 2;
+    final long MIN_TIME_TO_ALARM = 60 * 60 * 1000L;
+    final long MAX_TEMP_APP_WHITELIST_DURATION = 5 * 60 * 1000L;
+    final long MMS_TEMP_APP_WHITELIST_DURATION = 60 * 1000L;
+    final long SMS_TEMP_APP_WHITELIST_DURATION = 20 * 1000L;
     EditText et_inactive_to;
     EditText et_sensing_to;
     EditText et_locating_to;
@@ -124,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     Gson gson;
     int displayValueIn;
     int millisecondsInOneSecond = 1000;
-    int millisecondsInOneMinute = 60 * millisecondsInOneSecond;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,15 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
         setInfoOnClick();
 
-
-        if (RootShell.isAccessGiven()) {
-            hasRoot = true;
-            //getSettings();
-        }else{
-            hasRoot = false;
-            //Toast.makeText(this, "Root access required!", Toast.LENGTH_SHORT).show();
-            //finish();
-        }
+        hasRoot = RootShell.isAccessGiven();
         getSettings();
     }
 
@@ -494,11 +484,7 @@ public class MainActivity extends AppCompatActivity {
 
                 };
                 RootShell.getShell(true).add(command);
-            } catch (RootDeniedException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (RootDeniedException | TimeoutException | IOException e) {
                 e.printStackTrace();
             }
         }else{
@@ -539,22 +525,22 @@ public class MainActivity extends AppCompatActivity {
     private void save(){
         int multiplyBy = getDisplayValueFix();
         StringBuilder sb = new StringBuilder();
-        sb.append(KEY_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_inactive_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_SENSING_TIMEOUT + "=" + Long.valueOf(et_sensing_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_LOCATING_TIMEOUT + "=" + Long.valueOf(et_locating_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_LOCATION_ACCURACY + "=" + Float.valueOf(et_location_accuracy.getText().toString()) + ",");
-        sb.append(KEY_MOTION_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_motion_inactive_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_IDLE_AFTER_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_idle_after_inactive_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_IDLE_PENDING_TIMEOUT + "=" + Long.valueOf(et_idle_pending_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_MAX_IDLE_PENDING_TIMEOUT + "=" + Long.valueOf(et_max_idle_pending_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_IDLE_PENDING_FACTOR + "=" + Float.valueOf(et_idle_pending_factor.getText().toString()) + ",");
-        sb.append(KEY_IDLE_TIMEOUT + "=" + Long.valueOf(et_idle_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_MAX_IDLE_TIMEOUT + "=" + Long.valueOf(et_max_idle_to.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_IDLE_FACTOR + "=" + Float.valueOf(et_idle_factor.getText().toString()) + ",");
-        sb.append(KEY_MIN_TIME_TO_ALARM + "=" + Long.valueOf(et_min_time_to_alarm.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_MAX_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_max_temp_app_whitelist_duration.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_MMS_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_mms_temp_app_whitelist_duration.getText().toString()) * multiplyBy + ",");
-        sb.append(KEY_SMS_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_sms_temp_app_whitelist_duration.getText().toString()) * multiplyBy);
+        sb.append(KEY_INACTIVE_TIMEOUT + "=").append(Long.valueOf(et_inactive_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_SENSING_TIMEOUT + "=").append(Long.valueOf(et_sensing_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_LOCATING_TIMEOUT + "=").append(Long.valueOf(et_locating_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_LOCATION_ACCURACY + "=").append(Float.valueOf(et_location_accuracy.getText().toString())).append(",");
+        sb.append(KEY_MOTION_INACTIVE_TIMEOUT + "=").append(Long.valueOf(et_motion_inactive_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_IDLE_AFTER_INACTIVE_TIMEOUT + "=").append(Long.valueOf(et_idle_after_inactive_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_IDLE_PENDING_TIMEOUT + "=").append(Long.valueOf(et_idle_pending_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_MAX_IDLE_PENDING_TIMEOUT + "=").append(Long.valueOf(et_max_idle_pending_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_IDLE_PENDING_FACTOR + "=").append(Float.valueOf(et_idle_pending_factor.getText().toString())).append(",");
+        sb.append(KEY_IDLE_TIMEOUT + "=").append(Long.valueOf(et_idle_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_MAX_IDLE_TIMEOUT + "=").append(Long.valueOf(et_max_idle_to.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_IDLE_FACTOR + "=").append(Float.valueOf(et_idle_factor.getText().toString())).append(",");
+        sb.append(KEY_MIN_TIME_TO_ALARM + "=").append(Long.valueOf(et_min_time_to_alarm.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_MAX_TEMP_APP_WHITELIST_DURATION + "=").append(Long.valueOf(et_max_temp_app_whitelist_duration.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_MMS_TEMP_APP_WHITELIST_DURATION + "=").append(Long.valueOf(et_mms_temp_app_whitelist_duration.getText().toString()) * multiplyBy).append(",");
+        sb.append(KEY_SMS_TEMP_APP_WHITELIST_DURATION + "=").append(Long.valueOf(et_sms_temp_app_whitelist_duration.getText().toString()) * multiplyBy);
 
         if(hasRoot) {
             try {
@@ -576,11 +562,7 @@ public class MainActivity extends AppCompatActivity {
 
                 };
                 RootShell.getShell(true).add(command);
-            } catch (RootDeniedException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (RootDeniedException | TimeoutException | IOException e) {
                 e.printStackTrace();
             }
         }else{
@@ -595,9 +577,14 @@ public class MainActivity extends AppCompatActivity {
             });
             builder.setNegativeButton("Copy to clipboard", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ClipboardManager manager =
+                    /*ClipboardManager manager =
                             (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                     manager.setText(command);
+                    Toast.makeText(MainActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();*/
+
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("label for text", command);
+                    clipboard.setPrimaryClip(clip);
                     Toast.makeText(MainActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -645,11 +632,7 @@ public class MainActivity extends AppCompatActivity {
 
                 };
                 RootShell.getShell(true).add(command);
-            } catch (RootDeniedException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (RootDeniedException | TimeoutException | IOException e) {
                 e.printStackTrace();
             }
         }else{
@@ -700,11 +683,7 @@ public class MainActivity extends AppCompatActivity {
 
                 };
                 RootShell.getShell(true).add(command);
-            } catch (RootDeniedException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (RootDeniedException | TimeoutException | IOException e) {
                 e.printStackTrace();
             }
         }else{
@@ -824,9 +803,7 @@ public class MainActivity extends AppCompatActivity {
                 lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                        if((position + 1) <= Profiles.defaultProfileList.size()){
-
-                        }else {
+                        if ((position + 1) > Profiles.defaultProfileList.size()) {
                             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
                             dialog.setTitle("Delete profile");
                             dialog.setMessage(combinedProfileList.get(position).Name);
@@ -860,24 +837,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String name = edittext.getText().toString();
                 int multiplyBy = getDisplayValueFix();
-                StringBuilder sb = new StringBuilder();
-                sb.append(KEY_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_inactive_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_SENSING_TIMEOUT + "=" + Long.valueOf(et_sensing_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_LOCATING_TIMEOUT + "=" + Long.valueOf(et_locating_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_LOCATION_ACCURACY + "=" + Float.valueOf(et_location_accuracy.getText().toString()) + ",");
-                sb.append(KEY_MOTION_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_motion_inactive_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_IDLE_AFTER_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_idle_after_inactive_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_IDLE_PENDING_TIMEOUT + "=" + Long.valueOf(et_idle_pending_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_MAX_IDLE_PENDING_TIMEOUT + "=" + Long.valueOf(et_max_idle_pending_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_IDLE_PENDING_FACTOR + "=" + Float.valueOf(et_idle_pending_factor.getText().toString()) + ",");
-                sb.append(KEY_IDLE_TIMEOUT + "=" + Long.valueOf(et_idle_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_MAX_IDLE_TIMEOUT + "=" + Long.valueOf(et_max_idle_to.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_IDLE_FACTOR + "=" + Float.valueOf(et_idle_factor.getText().toString()) + ",");
-                sb.append(KEY_MIN_TIME_TO_ALARM + "=" + Long.valueOf(et_min_time_to_alarm.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_MAX_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_max_temp_app_whitelist_duration.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_MMS_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_mms_temp_app_whitelist_duration.getText().toString()) * multiplyBy + ",");
-                sb.append(KEY_SMS_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_sms_temp_app_whitelist_duration.getText().toString()) * multiplyBy);
-                Profile profile = new Profile(name, sb.toString());
+                String sb = (KEY_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_inactive_to.getText().toString()) * multiplyBy + ",") +
+                        KEY_SENSING_TIMEOUT + "=" + Long.valueOf(et_sensing_to.getText().toString()) * multiplyBy + "," +
+                        KEY_LOCATING_TIMEOUT + "=" + Long.valueOf(et_locating_to.getText().toString()) * multiplyBy + "," +
+                        KEY_LOCATION_ACCURACY + "=" + Float.valueOf(et_location_accuracy.getText().toString()) + "," +
+                        KEY_MOTION_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_motion_inactive_to.getText().toString()) * multiplyBy + "," +
+                        KEY_IDLE_AFTER_INACTIVE_TIMEOUT + "=" + Long.valueOf(et_idle_after_inactive_to.getText().toString()) * multiplyBy + "," +
+                        KEY_IDLE_PENDING_TIMEOUT + "=" + Long.valueOf(et_idle_pending_to.getText().toString()) * multiplyBy + "," +
+                        KEY_MAX_IDLE_PENDING_TIMEOUT + "=" + Long.valueOf(et_max_idle_pending_to.getText().toString()) * multiplyBy + "," +
+                        KEY_IDLE_PENDING_FACTOR + "=" + Float.valueOf(et_idle_pending_factor.getText().toString()) + "," +
+                        KEY_IDLE_TIMEOUT + "=" + Long.valueOf(et_idle_to.getText().toString()) * multiplyBy + "," +
+                        KEY_MAX_IDLE_TIMEOUT + "=" + Long.valueOf(et_max_idle_to.getText().toString()) * multiplyBy + "," +
+                        KEY_IDLE_FACTOR + "=" + Float.valueOf(et_idle_factor.getText().toString()) + "," +
+                        KEY_MIN_TIME_TO_ALARM + "=" + Long.valueOf(et_min_time_to_alarm.getText().toString()) * multiplyBy + "," +
+                        KEY_MAX_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_max_temp_app_whitelist_duration.getText().toString()) * multiplyBy + "," +
+                        KEY_MMS_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_mms_temp_app_whitelist_duration.getText().toString()) * multiplyBy + "," +
+                        KEY_SMS_TEMP_APP_WHITELIST_DURATION + "=" + Long.valueOf(et_sms_temp_app_whitelist_duration.getText().toString()) * multiplyBy;
+                Profile profile = new Profile(name, sb);
                 Profiles.profileList.add(profile);
             }
         });

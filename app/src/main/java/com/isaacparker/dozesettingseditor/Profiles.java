@@ -11,14 +11,14 @@ import java.util.ArrayList;
 /**
  * Created by isaac on 1/11/15.
  */
-public class Profiles {
+class Profiles {
 
     //User Profiles
-    public static ArrayList<Profile> profileList = new ArrayList<>();
+    static ArrayList<Profile> profileList = new ArrayList<>();
     //Hardcoded Profiles
-    public static ArrayList<Profile> defaultProfileList;
+    static ArrayList<Profile> defaultProfileList;
 
-    public static void loadDefaultProfiles(){
+    static void loadDefaultProfiles() {
         defaultProfileList = new ArrayList<>();
         Profile defaultProfile = new Profile("Stock", "inactive_to=1800000,sensing_to=240000,locating_to=30000,location_accuracy=20.0,motion_inactive_to=600000,idle_after_inactive_to=1800000,idle_pending_to=300000,max_idle_pending_to=600000,idle_pending_factor=2.0,idle_to=3600000,max_idle_to=21600000,idle_factor=2,min_time_to_alarm=3600000,max_temp_app_whitelist_duration=300000,mms_temp_app_whitelist_duration=60000,sms_temp_app_whitelist_duration=20000");
         Profile freebee269Profile = new Profile("freebee269", "inactive_to=600000,sensing_to=0,locating_to=0,location_accuracy=20.0,motion_inactive_to=0,idle_after_inactive_to=0,idle_pending_to=120000,max_idle_pending_to=120000,idle_pending_factor=2.0,idle_to=1800000,max_idle_to=21600000,idle_factor=2,min_time_to_alarm=3600000,max_temp_app_whitelist_duration=300000,mms_temp_app_whitelist_duration=60000,sms_temp_app_whitelist_duration=20000");
@@ -30,7 +30,7 @@ public class Profiles {
         defaultProfileList.add(tuhinxp04Profile);
     }
 
-    public static void loadUserProfiles(SharedPreferences sharedPref, Gson gson) {
+    static void loadUserProfiles(SharedPreferences sharedPref, Gson gson) {
         String gsonUserProfile = sharedPref.getString("UserProfiles" , null);
         Type type = new TypeToken<ArrayList<Profile>>(){}.getType();
         if(gsonUserProfile != null){
@@ -38,7 +38,7 @@ public class Profiles {
         }
     }
 
-    public static void saveUserProfiles(SharedPreferences sharedPref, Gson gson){
-        sharedPref.edit().putString("UserProfiles", gson.toJson(profileList)).commit();
+    static void saveUserProfiles(SharedPreferences sharedPref, Gson gson) {
+        sharedPref.edit().putString("UserProfiles", gson.toJson(profileList)).apply();
     }
 }

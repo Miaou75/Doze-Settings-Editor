@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.isaacparker.dozesettingseditor.MainActivity"
     tools:showIn="@layout/activity_main">
@@ -16,7 +16,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -28,25 +28,27 @@
                 android:id="@+id/iv_inactive_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/InactiveTimeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Inactive Timeout:"
-                android:layout_toRightOf="@id/iv_inactive_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_inactive_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/InactiveTimeout" />
 
             <EditText
                 android:id="@+id/et_inactive_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -58,25 +60,27 @@
                 android:id="@+id/iv_sensing_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/sensing_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sensing Timeout:"
-                android:layout_toRightOf="@id/iv_sensing_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_sensing_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/sensing_timeout" />
 
             <EditText
                 android:id="@+id/et_sensing_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -88,26 +92,28 @@
                 android:id="@+id/iv_locating_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="string/locating_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Locating Timeout:"
-                android:layout_toRightOf="@id/iv_locating_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_locating_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/locating_timeout" />
 
             <EditText
                 android:id="@+id/et_locating_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -119,25 +125,27 @@
                 android:id="@+id/iv_location_accurary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/location_accuracy"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Location Accuracy:"
-                android:layout_toRightOf="@id/iv_location_accurary"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_location_accurary"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/location_accuracy" />
 
             <EditText
                 android:id="@+id/et_location_accurary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -149,25 +157,27 @@
                 android:id="@+id/iv_motion_inactive_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/motion_inactive_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Motion Inactive Timeout:"
-                android:layout_toRightOf="@id/iv_motion_inactive_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_motion_inactive_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/motion_inactive_timeout" />
 
             <EditText
                 android:id="@+id/et_motion_inactive_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -179,25 +189,27 @@
                 android:id="@+id/iv_idle_after_inactive_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/idle_after_inactive_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idle After Inactive Timeout:"
-                android:layout_toRightOf="@id/iv_idle_after_inactive_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_idle_after_inactive_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/idle_after_inactive_timeout" />
 
             <EditText
                 android:id="@+id/et_idle_after_inactive_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -209,25 +221,27 @@
                 android:id="@+id/iv_idle_pending_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/idle_pending_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idle Pending Timeout:"
-                android:layout_toRightOf="@id/iv_idle_pending_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_idle_pending_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/idle_pending_timeout" />
 
             <EditText
                 android:id="@+id/et_idle_pending_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -239,25 +253,27 @@
                 android:id="@+id/iv_max_idle_pending_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/max_idle_pending_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Max Idle Pending Timeout:"
-                android:layout_toRightOf="@id/iv_max_idle_pending_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_max_idle_pending_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/max_idle_pending_timeout" />
 
             <EditText
                 android:id="@+id/et_max_idle_pending_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -269,25 +285,27 @@
                 android:id="@+id/iv_idle_pending_factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/idle_pending_factor"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idle Pending Factor:"
-                android:layout_toRightOf="@id/iv_idle_pending_factor"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_idle_pending_factor"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/idle_pending_factor" />
 
             <EditText
                 android:id="@+id/et_idle_pending_factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -299,25 +317,27 @@
                 android:id="@+id/iv_idle_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/idle_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idle Timeout:"
-                android:layout_toRightOf="@id/iv_idle_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_idle_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/idle_timeout" />
 
             <EditText
                 android:id="@+id/et_idle_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -329,25 +349,27 @@
                 android:id="@+id/iv_max_idle_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/max_idle_timeout"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Max Idle Timeout:"
-                android:layout_toRightOf="@id/iv_max_idle_to"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_max_idle_to"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/max_idle_timeout" />
 
             <EditText
                 android:id="@+id/et_max_idle_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -359,25 +381,27 @@
                 android:id="@+id/iv_idle_factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/idle_factor"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idle Factor:"
-                android:layout_toRightOf="@id/iv_idle_factor"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_idle_factor"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/idle_factor" />
 
             <EditText
                 android:id="@+id/et_idle_factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -389,25 +413,27 @@
                 android:id="@+id/iv_min_time_to_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/min_time_to_alarm"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Min Time to Alarm:"
-                android:layout_toRightOf="@id/iv_min_time_to_alarm"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_min_time_to_alarm"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/min_time_to_alarm" />
 
             <EditText
                 android:id="@+id/et_min_time_to_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -419,25 +445,27 @@
                 android:id="@+id/iv_max_temp_app_whitelist_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/max_temp_app_whitelist_duration"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Max Temp App Whitelist Duration:"
-                android:layout_toRightOf="@id/iv_max_temp_app_whitelist_duration"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_max_temp_app_whitelist_duration"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/max_temp_app_whitelist_duration" />
 
             <EditText
                 android:id="@+id/et_max_temp_app_whitelist_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -449,25 +477,27 @@
                 android:id="@+id/iv_mms_temp_app_whitelist_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/mms_temp_app_whitelist_duration"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MMS Temp App Whitelist Duration:"
-                android:layout_toRightOf="@id/iv_mms_temp_app_whitelist_duration"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_mms_temp_app_whitelist_duration"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/mms_temp_app_whitelist_duration" />
 
             <EditText
                 android:id="@+id/et_mms_temp_app_whitelist_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -479,25 +509,27 @@
                 android:id="@+id/iv_sms_temp_app_whitelist_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_outline_blue_600_18dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/sms_temp_app_whitelist_duration"
+                android:src="@drawable/ic_info_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SMS Temp App Whitelist Duration:"
-                android:layout_toRightOf="@id/iv_sms_temp_app_whitelist_duration"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/iv_sms_temp_app_whitelist_duration"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/sms_temp_app_whitelist_duration" />
 
             <EditText
                 android:id="@+id/et_sms_temp_app_whitelist_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="number"
-                android:layout_centerVertical="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:inputType="number" />
 
         </RelativeLayout>
     </LinearLayout>

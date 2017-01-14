@@ -3,12 +3,12 @@ package com.isaacparker.dozesettingseditor;
 /**
  * Created by isaac on 2/11/15.
  */
-public class Profile {
+class Profile {
 
-    public String Name;
-    public String Settings;
+    String Name;
+    String Settings;
 
-    public Profile(String name, String settings){
+    Profile(String name, String settings) {
         Name = name;
         Settings = settings;
     }
